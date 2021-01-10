@@ -4,6 +4,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// ReSharper disable once CheckNamespace
 namespace LambdaTheDev.NetworkAudioSync
 {
     [RequireComponent(typeof(AudioSource))]
@@ -36,7 +37,7 @@ namespace LambdaTheDev.NetworkAudioSync
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawSphere(transform.position, radius);
+            Gizmos.DrawWireSphere(transform.position, radius);
         }
 
         #endregion
@@ -65,9 +66,9 @@ namespace LambdaTheDev.NetworkAudioSync
                 case SyncType.EveryoneInScene:
                     SendToEveryoneInScene(clipToBeSent, GetScene());
                     break;
-                    // case SyncType.Everyone:
-                    //     SendToEveryone(clipToBeSent);
-                    //     break;
+                // case SyncType.Everyone:
+                //     SendToEveryone(clipToBeSent);
+                //     break;
             }
         }
 
@@ -87,8 +88,8 @@ namespace LambdaTheDev.NetworkAudioSync
                 if (identity == null) continue;
                 if (identity.gameObject.scene != GetScene()) continue;
                 NetworkConnection connection = identity.connectionToClient;
-                if (connection == null) continue;
-
+                if(connection == null) continue;
+                
                 TargetSyncAudio(connection, clipId);
             }
         }
@@ -99,9 +100,9 @@ namespace LambdaTheDev.NetworkAudioSync
             foreach (var connection in NetworkServer.connections)
             {
                 NetworkIdentity identity = connection.Value.identity;
-                if (identity == null) continue;
-                if (identity.gameObject.scene != scene) continue;
-
+                if(identity == null) continue;
+                if(identity.gameObject.scene != scene) continue;
+                
                 TargetSyncAudio(connection.Value, clipId);
             }
         }
@@ -118,13 +119,13 @@ namespace LambdaTheDev.NetworkAudioSync
         }
 
         #endregion
-
+        
         #region Network events
 
         [TargetRpc]
         void TargetSyncAudio(NetworkConnection connection, int clipId)
         {
-            if (clipId == 0) _source.Play();
+            if(clipId == 0) _source.Play();
             else
             {
                 AudioClip clip = _parsedAudioClips.FirstOrDefault(x => x.Value == clipId).Key;
