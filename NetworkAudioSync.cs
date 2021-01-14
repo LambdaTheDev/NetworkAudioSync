@@ -140,10 +140,8 @@ namespace LambdaTheDev.NetworkAudioSync
         #region Network events
 
         [TargetRpc]
-        void TargetSyncAudio(NetworkConnection connection, int clipId, float volume = 1f)
+        void TargetSyncAudio(NetworkConnection connection, int clipId)
         {
-            _source.volume = volume;
-            
             if(clipId == 0) _source.Play();
             else
             {
