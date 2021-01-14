@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mirror;
@@ -12,6 +13,7 @@ namespace LambdaTheDev.NetworkAudioSync
     {
         public SyncType type;
         public float radius;
+        public bool rangeBasedVolume = true;
         public List<AudioClip> registeredClips;
 
         //AudioClip is a key so the server has
@@ -32,12 +34,27 @@ namespace LambdaTheDev.NetworkAudioSync
                 _parsedAudioClips.Add(clip, id);
                 id++;
             }
+
+            if (rangeBasedVolume)
+            {
+                _source.rolloffMode = AudioRolloffMode.Linear;
+                _source.maxDistance = radius;
+            }
         }
 
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, radius);
+        }
+
+        private void OnValidate()
+        {
+            if (rangeBasedVolume && type != SyncType.Radius)
+            {
+                rangeBasedVolume = false;
+                Debug.LogError("Range based volume is allowed only with Radius sync type!");
+            }
         }
 
         #endregion
@@ -86,7 +103,7 @@ namespace LambdaTheDev.NetworkAudioSync
             {
                 NetworkIdentity identity = target.gameObject.GetComponent<NetworkIdentity>();
                 if (identity == null) continue;
-                if (identity.gameObject.scene != GetScene()) continue;
+                if (identity.gameObject.scene != scene) continue;
                 NetworkConnection connection = identity.connectionToClient;
                 if(connection == null) continue;
                 
@@ -123,8 +140,10 @@ namespace LambdaTheDev.NetworkAudioSync
         #region Network events
 
         [TargetRpc]
-        void TargetSyncAudio(NetworkConnection connection, int clipId)
+        void TargetSyncAudio(NetworkConnection connection, int clipId, float volume = 1f)
         {
+            _source.volume = volume;
+            
             if(clipId == 0) _source.Play();
             else
             {
