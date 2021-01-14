@@ -13,7 +13,7 @@ namespace LambdaTheDev.NetworkAudioSync
     {
         public SyncType type;
         public float radius;
-        public bool rangeBasedVolume = true;
+        public bool rangeBasedVolume = false;
         public List<AudioClip> registeredClips;
 
         //AudioClip is a key so the server has
