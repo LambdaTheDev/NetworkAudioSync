@@ -13,13 +13,15 @@ namespace LambdaTheDev.NetworkAudioSync
     {
         public SyncType type;
         public float radius;
-        public bool rangeBasedVolume = false;
+        public bool rangeBasedVolume = true;
+        public bool excludeOwner;
         public List<AudioClip> registeredClips;
 
         //AudioClip is a key so the server has
         //less operations to do.
         private Dictionary<AudioClip, int> _parsedAudioClips;
         private AudioSource _source;
+        private GameObject _cachedGameObject;
 
         #region Unity events
 
@@ -35,11 +37,18 @@ namespace LambdaTheDev.NetworkAudioSync
                 id++;
             }
 
+            if (type == SyncType.Everyone)
+            {
+                DontDestroyOnLoad(gameObject);
+            }
+
             if (rangeBasedVolume)
             {
                 _source.rolloffMode = AudioRolloffMode.Linear;
                 _source.maxDistance = radius;
             }
+
+            _cachedGameObject = gameObject;
         }
 
         private void OnDrawGizmosSelected()
@@ -54,6 +63,11 @@ namespace LambdaTheDev.NetworkAudioSync
             {
                 rangeBasedVolume = false;
                 Debug.LogError("Range based volume is allowed only with Radius sync type!");
+            }
+
+            if (type == SyncType.Everyone)
+            {
+                Debug.LogWarning("Everyone sync type is experimental and may have bugs!");
             }
         }
 
@@ -83,9 +97,9 @@ namespace LambdaTheDev.NetworkAudioSync
                 case SyncType.EveryoneInScene:
                     SendToEveryoneInScene(clipToBeSent, GetScene());
                     break;
-                // case SyncType.Everyone:
-                //     SendToEveryone(clipToBeSent);
-                //     break;
+                case SyncType.Everyone:
+                     SendToEveryone(clipToBeSent);
+                     break;
             }
         }
 
@@ -107,6 +121,8 @@ namespace LambdaTheDev.NetworkAudioSync
                 NetworkConnection connection = identity.connectionToClient;
                 if(connection == null) continue;
                 
+                if (connection == connectionToClient && excludeOwner) return;
+                
                 TargetSyncAudio(connection, clipId);
             }
         }
@@ -120,6 +136,8 @@ namespace LambdaTheDev.NetworkAudioSync
                 if(identity == null) continue;
                 if(identity.gameObject.scene != scene) continue;
                 
+                if (connection.Value == connectionToClient && excludeOwner) return;
+                
                 TargetSyncAudio(connection.Value, clipId);
             }
         }
@@ -127,7 +145,15 @@ namespace LambdaTheDev.NetworkAudioSync
         [Server]
         void SendToEveryone(int clipId)
         {
-            //Work in progress...
+            foreach (var connection in NetworkServer.connections)
+            {
+                NetworkIdentity identity = connection.Value.identity;
+                if(identity == null) continue;
+
+                if (connection.Value == connectionToClient && excludeOwner) return;
+                
+                TargetSyncAudio(connection.Value, clipId);
+            }
         }
 
         Scene GetScene()
@@ -165,7 +191,7 @@ namespace LambdaTheDev.NetworkAudioSync
         {
             Radius, //Send only to players in specific radius (defined in the radius field)
             EveryoneInScene, //Send to every player in a current scene
-            //Everyone //Send to everyone on the server (must be DontDestroyOnLoad()) || WORK IN PROGRESS
+            Everyone //EXPERIMENTAL: Send to everyone on the server who has NetworkAudioSync component somewhere. It makes GameObject DDOL.
         }
 
         #endregion
