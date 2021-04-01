@@ -1,13 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="956d0f2c-b825-4a60-9817-668d683406e8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/NetworkAudioSync.cs" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync/NetworkFootsteps.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync/NetworkFootsteps.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSync.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -16,11 +47,16 @@
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/IAudioSyncListener.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/AudioSyncListener.cs" />
+        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSync.cs" />
+        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync/NetworkFootsteps.cs" />
       </list>
     </option>
   </component>
   <component name="ProjectId" id="1qaI2JlvdgL91efzQa9q1HQFZJU" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -60,6 +96,7 @@
       <option name="presentableId" value="Default" />
       <updated>1617311068313</updated>
       <workItem from="1617311074262" duration="4518000" />
+      <workItem from="1617316862403" duration="2168000" />
     </task>
     <servers />
   </component>
@@ -68,6 +105,17 @@
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
