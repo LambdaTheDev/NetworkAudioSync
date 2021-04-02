@@ -24,9 +24,6 @@ I have thought about some specific situations when audio sync is needed. Here ar
 - NetworkAnnouncer setup is quite different than in previous modules. First 2 options are announcement prefix ans suffix. You can add there AudioClips that will play right before and right after specific announcement. Those aren't mandatory, so you don't have to assign them. Then, you have next 2 variables - *delayBetweenAnnouncements* and *delayAfterPrefix*. First one is amount of seconds that NetworkAnnouncer will wait before starting next announcement. Second float is amount of seconds that NA will wait before finishing playing *announcementPrefix* AudioClip.
 - To send an announcement, you only need to call Announce(AudioClip) method. Remember - AudioClip needs to be registered in the NetworkAudioClips!
 
-# Is there a way to have NetworkAudioClips in a different GO?
-Not now, but soon I will implement such feature. Only thing I need to do is to add idiot-proof checks to make sure that someone referenced NAC in AudioSync module.
-
 # Projects that use NetworkAudioSync:
 *If you use NetworkAudioSync, and want to promote your project, contact me on Discord - LambdaTheDev#6559*
 - SCP: Site-75 Game - https://discord.gg/g42K6TH - Semi-MMORPG in the SCP Foundation universe
