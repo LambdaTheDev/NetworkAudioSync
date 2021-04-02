@@ -11,9 +11,27 @@ namespace LambdaTheDev.NetworkAudioSync
         
         public List<AudioClip> registeredClips;
 
+#if UNITY_EDITOR || UNITY_SERVER
+
+        private void OnValidate()
+        {
+            if (registeredClips.Count > byte.MaxValue - 1)
+            {
+                Debug.LogWarning("You can have only 256 registered AudioClips!");
+            }
+        }
+
+#endif
+        
         private void Awake()
         {
             _loadedClips.Clear();
+            
+            if (registeredClips.Count > byte.MaxValue - 1)
+            {
+                Debug.LogError("You can have only 256 registered AudioClips!");
+                return;
+            }
             
             byte nextId = 0;
             foreach (AudioClip clip in registeredClips)

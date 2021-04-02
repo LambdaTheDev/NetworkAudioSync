@@ -20,17 +20,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="956d0f2c-b825-4a60-9817-668d683406e8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync/NetworkFootsteps.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync/NetworkFootsteps.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Announcer.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Announcer/NetworkAnnouncer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Announcer/NetworkAnnouncer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/NetworkPreciseSync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/NetworkPreciseSync.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/PreciseSyncRequest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/PreciseSyncRequest.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSync.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,9 +49,15 @@
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/IAudioSyncListener.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/AudioSyncListener.cs" />
-        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" />
-        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSync.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync/NetworkFootsteps.cs" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/PreciseSyncRequest.cs" />
+        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" />
+        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/IAudioSync.cs" />
+        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSync.cs" />
+        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/NetworkPreciseSync.cs" />
+        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/AudioSyncUtils.cs" />
+        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Announcer/NetworkAnnouncer.cs" />
       </list>
     </option>
   </component>
@@ -96,7 +104,8 @@
       <option name="presentableId" value="Default" />
       <updated>1617311068313</updated>
       <workItem from="1617311074262" duration="4518000" />
-      <workItem from="1617316862403" duration="2168000" />
+      <workItem from="1617316862403" duration="2393000" />
+      <workItem from="1617368446564" duration="2546000" />
     </task>
     <servers />
   </component>
@@ -115,11 +124,16 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="464" y="134" key="RiderGenerateDialog" timestamp="1617368969224">
+      <screen x="0" y="25" width="1440" height="807" />
+    </state>
+    <state x="464" y="134" key="RiderGenerateDialog/0.25.1440.807@0.25.1440.807" timestamp="1617368969224" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1617315804771">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

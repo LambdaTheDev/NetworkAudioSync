@@ -6,11 +6,18 @@
       <e p="Assets" t="Include">
         <e p="LambdaTheDev" t="Include">
           <e p="NetworkAudioSync" t="Include">
+            <e p="Announcer" t="Include">
+              <e p="NetworkAnnouncer.cs" t="Include" />
+            </e>
             <e p="FootstepSync" t="Include">
               <e p="NetworkFootsteps.cs" t="Include" />
             </e>
             <e p="NetworkAudioClips.cs" t="Include" />
             <e p="NetworkAudioSync.cs" t="Include" />
+            <e p="PreciseSync" t="Include">
+              <e p="NetworkPreciseSync.cs" t="Include" />
+              <e p="PreciseSyncRequest.cs" t="Include" />
+            </e>
           </e>
         </e>
         <e p="Mirror" t="Include">
