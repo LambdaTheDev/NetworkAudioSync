@@ -18,9 +18,7 @@ namespace LambdaTheDev.NetworkAudioSync
         private void OnValidate()
         {
             if (registeredClips.Count - 1 > byte.MaxValue)
-            {
                 Debug.LogError("You can register up to 256 AudioClips in single NetworkAudioClips component!");
-            }
         }
 
 #endif
@@ -30,9 +28,10 @@ namespace LambdaTheDev.NetworkAudioSync
             _loadedClips.Clear();
             
             if (registeredClips.Count - 1 > byte.MaxValue)
-            {
                 throw new IndexOutOfRangeException("You can register up to 256 AudioClips in single NetworkAudioClips component!");
-            }
+            
+            if (registeredClips.Count == 0) 
+                Debug.LogWarning("NetworkAudioClips instance has 0 registered AudioClips! You sure about that?");
             
             byte nextId = 0;
             foreach (AudioClip clip in registeredClips)
@@ -45,9 +44,7 @@ namespace LambdaTheDev.NetworkAudioSync
         public byte GetClipId(AudioClip clip)
         {
             if (!_loadedClips.ContainsKey(clip))
-            {
                 throw new InvalidDataException("Tried to get ID of unregistered AudioClip!");
-            }
 
             return _loadedClips[clip];
         }

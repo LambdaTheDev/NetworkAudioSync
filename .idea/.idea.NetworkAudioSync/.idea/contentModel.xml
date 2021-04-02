@@ -11,7 +11,12 @@
             <e p="Announcer" t="Include">
               <e p="NetworkAnnouncer.cs" t="Include" />
             </e>
-            <e p="Experimental" t="Include" />
+            <e p="Experimental" t="Include">
+              <e p="CrossSceneAudioSync" t="Include">
+                <e p="CrossSceneAudioSyncInstance.cs" t="Include" />
+                <e p="CrossSceneAudioSyncListener.cs" t="Include" />
+              </e>
+            </e>
             <e p="FootstepSync" t="Include">
               <e p="NetworkFootsteps.cs" t="Include" />
             </e>

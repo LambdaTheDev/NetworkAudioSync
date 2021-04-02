@@ -17,7 +17,6 @@ namespace LambdaTheDev.NetworkAudioSync.PreciseSync
             
             if (source == null)
                 throw new NullReferenceException("You haven't assigned AudioSource for this NetworkPreciseAudioSync!");
-            
         }
 
         [Server]
