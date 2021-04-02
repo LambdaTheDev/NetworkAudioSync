@@ -26,14 +26,11 @@ namespace LambdaTheDev.NetworkAudioSync.PreciseSync
                 RequestTime = NetworkTime.time
             };
             
-            foreach (var observer in netIdentity.observers)
-            {
-                TargetPlayAudio(observer.Value, request);
-            }
+            RpcPlayAudio(request);
         }
 
-        [TargetRpc]
-        void TargetPlayAudio(NetworkConnection conn, PreciseSyncRequest request)
+        [ClientRpc]
+        void RpcPlayAudio(PreciseSyncRequest request)
         {
             double offset = NetworkTime.time - request.RequestTime;
             AudioClip clip = _clips.GetAudioClip(request.Clip);

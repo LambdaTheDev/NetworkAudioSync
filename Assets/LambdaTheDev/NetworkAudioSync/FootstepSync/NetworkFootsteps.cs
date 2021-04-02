@@ -37,21 +37,14 @@ namespace LambdaTheDev.NetworkAudioSync.FootstepSync
             Vector3 offset = _lastPosition - transform.position;
             if (offset.sqrMagnitude > FootstepTresholdSquared)
             {
-                SyncFootstep();
+                RpcPlayFootstep();
                 _lastPosition = transform.position;
             }
         }
+        
 
-        void SyncFootstep()
-        {
-            foreach (var observer in netIdentity.observers)
-            {
-                TargetPlayFootstep(observer.Value);
-            }
-        }
-
-        [TargetRpc(channel = Channels.DefaultUnreliable)]
-        void TargetPlayFootstep(NetworkConnection conn)
+        [ClientRpc(channel = Channels.DefaultUnreliable)]
+        void RpcPlayFootstep()
         {
             int footstepId = Random.Next(footstepSounds.Count);
             AudioClip clip = footstepSounds[footstepId];

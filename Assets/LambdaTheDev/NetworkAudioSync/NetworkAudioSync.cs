@@ -20,15 +20,11 @@ namespace LambdaTheDev.NetworkAudioSync
         public void SyncAudio(AudioClip clip)
         {
             byte id = _clips.GetClipId(clip);
-
-            foreach (var observer in netIdentity.observers)
-            {
-                TargetPlayAudio(observer.Value, id);
-            }
+            RpcPlayAudio(id);
         }
 
-        [TargetRpc]
-        void TargetPlayAudio(NetworkConnection conn, byte clipId)
+        [ClientRpc]
+        void RpcPlayAudio(byte clipId)
         {
             AudioClip receivedClip = _clips.GetAudioClip(clipId);
             if (receivedClip == null)

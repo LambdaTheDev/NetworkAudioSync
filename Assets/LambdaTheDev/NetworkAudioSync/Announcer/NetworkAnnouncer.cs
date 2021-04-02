@@ -38,15 +38,11 @@ namespace LambdaTheDev.NetworkAudioSync.Announcer
         public void Announce(AudioClip clip)
         {
             byte id = _clips.GetClipId(clip);
-
-            foreach (var observer in netIdentity.observers)
-            {
-                TargetEnqueueAnnouncement(observer.Value, id);
-            }
+            RpcEnqueueAnnouncement(id);
         }
 
-        [TargetRpc]
-        void TargetEnqueueAnnouncement(NetworkConnection conn, byte targetClip)
+        [ClientRpc]
+        void RpcEnqueueAnnouncement(byte targetClip)
         {
             AudioClip receivedClip = _clips.GetAudioClip(targetClip);
             _pendingAnnouncements.Enqueue(receivedClip);

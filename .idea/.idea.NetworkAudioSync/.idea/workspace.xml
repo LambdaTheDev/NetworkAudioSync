@@ -20,19 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="956d0f2c-b825-4a60-9817-668d683406e8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Announcer.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Announcer/NetworkAnnouncer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Announcer/NetworkAnnouncer.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/NetworkPreciseSync.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/NetworkPreciseSync.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/PreciseSyncRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/PreciseSyncRequest.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/indexLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSync.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Announcer/NetworkAnnouncer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Announcer/NetworkAnnouncer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync/NetworkFootsteps.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync/NetworkFootsteps.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +35,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -49,7 +45,6 @@
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/IAudioSyncListener.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/AudioSyncListener.cs" />
-        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync/NetworkFootsteps.cs" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/PreciseSyncRequest.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" />
@@ -58,6 +53,7 @@
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/NetworkPreciseSync.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/AudioSyncUtils.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Announcer/NetworkAnnouncer.cs" />
+        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync/NetworkFootsteps.cs" />
       </list>
     </option>
   </component>
@@ -106,6 +102,7 @@
       <workItem from="1617311074262" duration="4518000" />
       <workItem from="1617316862403" duration="2393000" />
       <workItem from="1617368446564" duration="2546000" />
+      <workItem from="1617373372186" duration="299000" />
     </task>
     <servers />
   </component>
