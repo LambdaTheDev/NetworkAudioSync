@@ -29,6 +29,6 @@ Not now, but soon I will implement such feature. Only thing I need to do is to a
 
 # Projects that use NetworkAudioSync:
 *If you use NetworkAudioSync, and want to promote your project, contact me on Discord - LambdaTheDev#6559*
-
+- SCP: Site-75 Game - https://discord.gg/g42K6TH - Semi-MMORPG in the SCP Foundation universe
 
 Enjoy & report all issues. If you want to contribute, DM me on Discord, or just make a pull request (remember to explain what you add to NetworkAudioSync)!
