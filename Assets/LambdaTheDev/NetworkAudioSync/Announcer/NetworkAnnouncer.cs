@@ -12,14 +12,14 @@ namespace LambdaTheDev.NetworkAudioSync.Announcer
         private readonly Queue<AudioClip> _pendingAnnouncements = new Queue<AudioClip>();
         
         public AudioSource source;
+        public NetworkAudioClips clips;
         
         [Header("Those can be null & don't have to be registered in NetworkAudioClips!")]
         public AudioClip announcementPrefix;
         public AudioClip announcementSuffix;
         public float delayBetweenAnnouncements = 2f;
         public float delayAfterPrefix = 0.5f;
-
-        private NetworkAudioClips _clips;
+        
         private bool _announcing;
 
         private WaitForSeconds _prefixDelay;
@@ -27,8 +27,13 @@ namespace LambdaTheDev.NetworkAudioSync.Announcer
 
         private void Start()
         {
+            if (clips == null)
+                throw new NullReferenceException("You haven't provided NetworkAudioClips component for this NetworkAnnouncer!");
+            
+            if (source == null)
+                throw new NullReferenceException("You haven't assigned AudioSource for this NetworkAnnouncer!");
+            
             _pendingAnnouncements.Clear();
-            _clips = GetComponent<NetworkAudioClips>();
             
             if(announcementPrefix != null) _prefixDelay = new WaitForSeconds(announcementPrefix.length + delayAfterPrefix);
             if(announcementSuffix != null) _suffixDelay = new WaitForSeconds(announcementSuffix.length + delayBetweenAnnouncements);
@@ -37,14 +42,14 @@ namespace LambdaTheDev.NetworkAudioSync.Announcer
         [Server]
         public void Announce(AudioClip clip)
         {
-            byte id = _clips.GetClipId(clip);
+            byte id = clips.GetClipId(clip);
             RpcEnqueueAnnouncement(id);
         }
 
         [ClientRpc]
         void RpcEnqueueAnnouncement(byte targetClip)
         {
-            AudioClip receivedClip = _clips.GetAudioClip(targetClip);
+            AudioClip receivedClip = clips.GetAudioClip(targetClip);
             _pendingAnnouncements.Enqueue(receivedClip);
             
             if (!_announcing)

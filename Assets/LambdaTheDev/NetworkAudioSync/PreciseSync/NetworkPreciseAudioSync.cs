@@ -5,21 +5,24 @@ using UnityEngine;
 namespace LambdaTheDev.NetworkAudioSync.PreciseSync
 {
     [RequireComponent(typeof(NetworkAudioClips))]
-    public class NetworkPreciseSync : NetworkBehaviour
+    public class NetworkPreciseAudioSync : NetworkBehaviour
     {
         public AudioSource source;
-
-        private NetworkAudioClips _clips;
+        public NetworkAudioClips clips;
 
         private void Start()
         {
-            _clips = GetComponent<NetworkAudioClips>();
+            if (clips == null)
+                throw new NullReferenceException("You haven't provided NetworkAudioClips component for this NetworkPreciseAudioSync!");
+            
+            if (source == null)
+                throw new NullReferenceException("You haven't assigned AudioSource for this NetworkPreciseAudioSync!");
         }
 
         [Server]
         public void SyncAudio(AudioClip clip)
         {
-            byte targetClip = _clips.GetClipId(clip);
+            byte targetClip = clips.GetClipId(clip);
             PreciseSyncRequest request = new PreciseSyncRequest
             {
                 Clip = targetClip,
@@ -33,9 +36,8 @@ namespace LambdaTheDev.NetworkAudioSync.PreciseSync
         void RpcPlayAudio(PreciseSyncRequest request)
         {
             double offset = NetworkTime.time - request.RequestTime;
-            AudioClip clip = _clips.GetAudioClip(request.Clip);
+            AudioClip clip = clips.GetAudioClip(request.Clip);
 
-            if (clip == null) return;
             if (clip.length > offset) return;
 
             source.clip = clip;

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using Mirror;
 using UnityEngine;
 
 namespace LambdaTheDev.NetworkAudioSync
@@ -15,10 +17,8 @@ namespace LambdaTheDev.NetworkAudioSync
 
         private void OnValidate()
         {
-            if (registeredClips.Count > byte.MaxValue - 1)
-            {
-                Debug.LogWarning("You can have only 256 registered AudioClips!");
-            }
+            if (registeredClips.Count - 1 > byte.MaxValue)
+                Debug.LogError("You can register up to 256 AudioClips in single NetworkAudioClips component!");
         }
 
 #endif
@@ -27,11 +27,11 @@ namespace LambdaTheDev.NetworkAudioSync
         {
             _loadedClips.Clear();
             
-            if (registeredClips.Count > byte.MaxValue - 1)
-            {
-                Debug.LogError("You can have only 256 registered AudioClips!");
-                return;
-            }
+            if (registeredClips.Count - 1 > byte.MaxValue)
+                throw new IndexOutOfRangeException("You can register up to 256 AudioClips in single NetworkAudioClips component!");
+            
+            if (registeredClips.Count == 0) 
+                Debug.LogWarning("NetworkAudioClips instance has 0 registered AudioClips! You sure about that?");
             
             byte nextId = 0;
             foreach (AudioClip clip in registeredClips)
@@ -43,6 +43,9 @@ namespace LambdaTheDev.NetworkAudioSync
 
         public byte GetClipId(AudioClip clip)
         {
+            if (!_loadedClips.ContainsKey(clip))
+                throw new InvalidDataException("Tried to get ID of unregistered AudioClip!");
+
             return _loadedClips[clip];
         }
 
@@ -53,7 +56,7 @@ namespace LambdaTheDev.NetworkAudioSync
                 if (clip.Value == id) return clip.Key;
             }
 
-            return null;
+            throw new InvalidDataException("Could not get AudioClip for incoming ID: " + id + "!");
         }
     }
 }
