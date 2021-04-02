@@ -10,6 +10,11 @@ namespace LambdaTheDev.NetworkAudioSync.FootstepSync
     {
         private static readonly Random Random = new Random();
 
+        public List<AudioClip> footstepSounds;
+        public AudioSource source;
+        public float footstepTreshold = 1f;
+        private float FootstepTresholdSquared => footstepTreshold * footstepTreshold;
+        
         //Set this temporary to false, if your player is crouching or something (SERVER-ONLY)
         public bool SyncFootsteps
         {
@@ -17,22 +22,26 @@ namespace LambdaTheDev.NetworkAudioSync.FootstepSync
             set { if (isServer) _syncFootsteps = value; }
         }
         
-        public List<AudioClip> footstepSounds;
-        public AudioSource source;
-        public float footstepTreshold = 1f;
+        private bool _syncFootsteps = true;
 
         private Vector3 _lastPosition;
-        private bool _syncFootsteps;
-        private float FootstepTresholdSquared => footstepTreshold * footstepTreshold;
+        private bool _disabled;
 
-        private void Awake()
+        private void Start()
         {
-            _syncFootsteps = true;
+            if (source == null)
+                throw new NullReferenceException("You haven't assigned AudioSource for this NetworkFootsteps!");
+
+            if (footstepSounds.Count == 0)
+            {
+                Debug.LogWarning("You haven't registered any footsteps clips. Module is being disabled...");
+                _disabled = true;
+            }
         }
 
         private void FixedUpdate()
         {
-            if(!isServer || !_syncFootsteps) return;
+            if(!isServer || !_syncFootsteps || _disabled) return;
 
             Vector3 offset = _lastPosition - transform.position;
             if (offset.sqrMagnitude > FootstepTresholdSquared)

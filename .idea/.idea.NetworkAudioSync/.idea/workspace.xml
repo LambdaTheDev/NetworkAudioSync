@@ -20,8 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="956d0f2c-b825-4a60-9817-668d683406e8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Experimental.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Announcer/NetworkAnnouncer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Announcer/NetworkAnnouncer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync/NetworkFootsteps.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync/NetworkFootsteps.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSync.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/NetworkPreciseSync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/NetworkPreciseAudioSync.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/NetworkPreciseSync.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/NetworkPreciseAudioSync.cs.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,14 +50,15 @@
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/AudioSyncListener.cs" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/PreciseSyncRequest.cs" />
-        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/IAudioSync.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/AudioSyncUtils.cs" />
-        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Announcer/NetworkAnnouncer.cs" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" />
+        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/NetworkPreciseSync.cs" />
+        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/NetworkPreciseAudioSync.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/FootstepSync/NetworkFootsteps.cs" />
         <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSync.cs" />
-        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/PreciseSync/NetworkPreciseSync.cs" />
-        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Announcer/NetworkAnnouncer.cs" />
       </list>
     </option>
   </component>
@@ -99,7 +107,7 @@
       <workItem from="1617311074262" duration="4518000" />
       <workItem from="1617316862403" duration="2393000" />
       <workItem from="1617368446564" duration="2546000" />
-      <workItem from="1617373372186" duration="2377000" />
+      <workItem from="1617373372186" duration="10226000" />
     </task>
     <servers />
   </component>
