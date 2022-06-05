@@ -9,58 +9,31 @@ using UnityEngine.Audio;
 namespace LambdaTheDev.NetworkAudioSync
 {
     // Allows AudioSource settings synchronization over network
-    public class NetworkAudioSource : MonoBehaviour
+    public class NetworkAudioSource : BaseNetworkAudioSyncComponent
     {
-        // Synchronized AudioSource
-        [SerializeField] private AudioSource source;
-
         // Audio clips used by this NAS instance
         [SerializeField] private NetworkAudioClips clips;
+        
 
-        // Chosen networking integration
-        private INetworkAudioSyncIntegration _integration;
-
-
-        private void Awake()
+        protected override void VirtualAwake()
         {
-            // Validate component
-            if (source == null)
-                throw new NullReferenceException("AudioSource bound to this NetworkAudioSource must be set!");
-
             if (clips == null)
                 Debug.LogWarning("NetworkAudioClips instance has not been assigned for this NetworkAudioSource. This is not an error, but you will be unable to play other AudioClips than default one!");
             else
                 clips.Initialize();
 
             // Initialize integration
-            _integration = GetComponent<INetworkAudioSyncIntegration>();
-            if (_integration == null)
-                throw new MissingComponentException("Could not locate networking integration component! It is required to use NetworkAudioSource functionalities. They are usually named like: NetworkAudioSync(NETWORKING_SOLUTION_NAME)!");
-            
-            _integration.BindPacketCallback(OnNetworkPacket);
-            
-            // Register this AudioSource
-            if (!NetworkAudioSyncManager.AudioSourceStates.ContainsKey(source))
-            {
-                NetworkAudioSyncManager.AudioSourceStates.Add(source, new State());
-                source.UnPause(); // Ensure that saved state matches real state.
-                                  // Note: Maybe make ApplyState method & make it serializable
-            }
+            Integration.BindPacketCallback(OnNetworkPacket);
         }
 
-        private void OnDestroy()
-        {
-            // When object is destroyed, unregister source
-            if (source != null)
-                NetworkAudioSyncManager.AudioSourceStates.Remove(source);
-        }
+        protected override void VirtualOnDestroy() { }
 
         #region Internal networking processor
 
         private void OnNetworkPacket(ArraySegment<byte> packet)
         {
             // Server has already applied settings. This shouldn't happen tbh
-            if (_integration.IsServer) return;
+            if (Integration.IsServer) return;
 
             using AudioPacketReader reader = NetworkAudioSyncPools.PacketReaderPool.Rent();
             byte packetId = reader.ReadByte();
@@ -74,7 +47,7 @@ namespace LambdaTheDev.NetworkAudioSync
                     switch (playMode)
                     {
                         case AudioSourceActionId.PlayModes.Normal:
-                            source.Play();
+                            AudioSource.Play();
                             break;
                             
                         case AudioSourceActionId.PlayModes.Delayed:
@@ -82,9 +55,9 @@ namespace LambdaTheDev.NetworkAudioSync
                             bool compensate = reader.ReadBool();
 
                             if (compensate)
-                                delay = Mathf.Clamp(delay - _integration.ClientLatency, 0, float.MaxValue);
+                                delay = Mathf.Clamp(delay - Integration.ClientLatency, 0, float.MaxValue);
 
-                            source.PlayDelayed(delay);
+                            AudioSource.PlayDelayed(delay);
                             break;
                             
                         case AudioSourceActionId.PlayModes.OneShot:
@@ -94,17 +67,18 @@ namespace LambdaTheDev.NetworkAudioSync
                             AudioClip oneShotClip = clips.GetAudioClip(oneShotClipHash);
                             EnsureClipIsNotNull(oneShotClip);
                                 
-                            source.PlayOneShot(oneShotClip, volumeScale);
+                            AudioSource.PlayOneShot(oneShotClip, volumeScale);
                             break;
                             
                         default:
-                            throw new InvalidDataException("Invalid packet arrived!");
+                            AudioSourceActionId.InvalidPacketThrow();
+                            break;
                     }
 
                     break;
                     
                 case AudioSourceActionId.Stop:
-                    source.Stop();
+                    AudioSource.Stop();
                     break;
                     
                 case AudioSourceActionId.SetClip:
@@ -112,7 +86,7 @@ namespace LambdaTheDev.NetworkAudioSync
                     EnsureNetworkAudioClipsIsSet();
                     AudioClip setClip = clips.GetAudioClip(setClipHash);
                     EnsureClipIsNotNull(setClip);
-                    source.clip = setClip;
+                    AudioSource.clip = setClip;
                     break;
                     
                 #endregion
@@ -121,107 +95,108 @@ namespace LambdaTheDev.NetworkAudioSync
                 #region Properties impl
 
                 case AudioSourceActionId.BypassEffects:
-                    source.bypassEffects = reader.ReadBool();
+                    AudioSource.bypassEffects = reader.ReadBool();
                     break;
                     
                 case AudioSourceActionId.BypassListenerEffects:
-                    source.bypassListenerEffects = reader.ReadBool();
+                    AudioSource.bypassListenerEffects = reader.ReadBool();
                     break;
                     
                 case AudioSourceActionId.BypassReverbZones:
-                    source.bypassReverbZones = reader.ReadBool();
+                    AudioSource.bypassReverbZones = reader.ReadBool();
                     break;
                     
                 case AudioSourceActionId.DopplerLevel:
-                    source.dopplerLevel = reader.ReadFloat();
+                    AudioSource.dopplerLevel = reader.ReadFloat();
                     break;
                     
                 case AudioSourceActionId.GamepadSpeakerOutputType:
-                    source.gamepadSpeakerOutputType = (GamepadSpeakerOutputType)reader.ReadByte();
+                    AudioSource.gamepadSpeakerOutputType = (GamepadSpeakerOutputType)reader.ReadByte();
                     break;
                     
                 case AudioSourceActionId.IgnoreListenerPause:
-                    source.ignoreListenerPause = reader.ReadBool();
+                    AudioSource.ignoreListenerPause = reader.ReadBool();
                     break;
                     
                 case AudioSourceActionId.IgnoreListenerVolume:
-                    source.ignoreListenerVolume = reader.ReadBool();
+                    AudioSource.ignoreListenerVolume = reader.ReadBool();
                     break;
                     
                 case AudioSourceActionId.Loop:
-                    source.loop = reader.ReadBool();
+                    AudioSource.loop = reader.ReadBool();
                     break;
                     
                 case AudioSourceActionId.MaxDistance:
-                    source.maxDistance = reader.ReadFloat();
+                    AudioSource.maxDistance = reader.ReadFloat();
                     break;
                     
                 case AudioSourceActionId.MinDistance:
-                    source.minDistance = reader.ReadFloat();
+                    AudioSource.minDistance = reader.ReadFloat();
                     break;
                     
                 case AudioSourceActionId.Mute:
-                    source.mute = reader.ReadBool();
+                    AudioSource.mute = reader.ReadBool();
                     break;
                     
                 // TODO: Create OutputAudioMixerGroup support
                     
                 case AudioSourceActionId.PanStereo:
-                    source.panStereo = reader.ReadFloat();
+                    AudioSource.panStereo = reader.ReadFloat();
                     break;
                     
                 case AudioSourceActionId.Pitch:
-                    source.pitch = reader.ReadFloat();
+                    AudioSource.pitch = reader.ReadFloat();
                     break;
                     
                 case AudioSourceActionId.Priority:
-                    source.priority = reader.ReadInt();
+                    AudioSource.priority = reader.ReadInt();
                     break;
                     
                 case AudioSourceActionId.ReverbZoneMix:
-                    source.reverbZoneMix = reader.ReadFloat();
+                    AudioSource.reverbZoneMix = reader.ReadFloat();
                     break;
                     
                 case AudioSourceActionId.RolloffMode:
-                    source.rolloffMode = (AudioRolloffMode)reader.ReadByte();
+                    AudioSource.rolloffMode = (AudioRolloffMode)reader.ReadByte();
                     break;
                     
                 case AudioSourceActionId.SpatialBlend:
-                    source.spatialBlend = reader.ReadFloat();
+                    AudioSource.spatialBlend = reader.ReadFloat();
                     break;
                     
                 case AudioSourceActionId.Spatialize:
-                    source.spatialize = reader.ReadBool();
+                    AudioSource.spatialize = reader.ReadBool();
                     break;
                     
                 case AudioSourceActionId.SpatializePostEffects:
-                    source.spatializePostEffects = reader.ReadBool();
+                    AudioSource.spatializePostEffects = reader.ReadBool();
                     break;
                     
                 case AudioSourceActionId.Spread:
-                    source.spread = reader.ReadFloat();
+                    AudioSource.spread = reader.ReadFloat();
                     break;
                     
                 case AudioSourceActionId.Time:
-                    source.time = reader.ReadFloat();
+                    AudioSource.time = reader.ReadFloat();
                     break;
                     
                 case AudioSourceActionId.TimeSamples:
-                    source.timeSamples = reader.ReadInt();
+                    AudioSource.timeSamples = reader.ReadInt();
                     break;
                     
                 case AudioSourceActionId.VelocityUpdateMode:
-                    source.velocityUpdateMode = (AudioVelocityUpdateMode)reader.ReadByte();
+                    AudioSource.velocityUpdateMode = (AudioVelocityUpdateMode)reader.ReadByte();
                     break;
                     
                 case AudioSourceActionId.Volume:
-                    source.volume = reader.ReadFloat();
+                    AudioSource.volume = reader.ReadFloat();
                     break;
 
                 #endregion
                     
                 default:
-                    throw new InvalidDataException("Invalid packet arrived!");
+                    AudioSourceActionId.InvalidPacketThrow();
+                    break;
             }
         }
 
@@ -237,172 +212,172 @@ namespace LambdaTheDev.NetworkAudioSync
         public bool BypassEffects
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.bypassEffects;
+            get => AudioSource.bypassEffects;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.BypassEffects)
                         .WriteBool(value).Send();
                 }
-                source.bypassEffects = value;
+                AudioSource.bypassEffects = value;
             }
         }
         
         public bool BypassListenerEffects
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.bypassListenerEffects;
+            get => AudioSource.bypassListenerEffects;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.BypassListenerEffects)
                         .WriteBool(value).Send();
                 }
-                source.bypassListenerEffects = value;
+                AudioSource.bypassListenerEffects = value;
             }
         }
 
         public bool BypassReverbZones
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.bypassReverbZones;
+            get => AudioSource.bypassReverbZones;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.BypassReverbZones)
                         .WriteBool(value).Send();
                 }
-                source.bypassReverbZones = value;
+                AudioSource.bypassReverbZones = value;
             }
         }
 
         public float DopplerLevel
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.dopplerLevel;
+            get => AudioSource.dopplerLevel;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.DopplerLevel)
                         .WriteFloat(value).Send();
                 }
-                source.dopplerLevel = value;
+                AudioSource.dopplerLevel = value;
             }
         }
 
         public GamepadSpeakerOutputType GamepadSpeakerOutputType
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.gamepadSpeakerOutputType;
+            get => AudioSource.gamepadSpeakerOutputType;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.GamepadSpeakerOutputType)
                         .WriteByte((byte)value).Send();
                 }
-                source.gamepadSpeakerOutputType = value;
+                AudioSource.gamepadSpeakerOutputType = value;
             }
         }
 
         public bool IgnoreListenerPause
         { 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.ignoreListenerPause;
+            get => AudioSource.ignoreListenerPause;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.IgnoreListenerPause)
                         .WriteBool(value).Send();
                 }
-                source.ignoreListenerPause = value;
+                AudioSource.ignoreListenerPause = value;
             }
         }
 
         public bool IgnoreListenerVolume
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.ignoreListenerVolume;
+            get => AudioSource.ignoreListenerVolume;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.IgnoreListenerVolume)
                         .WriteBool(value).Send();
                 }
-                source.ignoreListenerVolume = value;
+                AudioSource.ignoreListenerVolume = value;
             }
         }
 
         public bool Loop
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.loop;
+            get => AudioSource.loop;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.Loop)
                         .WriteBool(value).Send();
                 }
-                source.loop = value;
+                AudioSource.loop = value;
             }
         }
 
         public float MaxDistance
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.maxDistance;
+            get => AudioSource.maxDistance;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.MaxDistance)
                         .WriteFloat(value).Send();
                 }
-                source.maxDistance = value;
+                AudioSource.maxDistance = value;
             }
         }
 
         public float MinDistance
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.minDistance;
+            get => AudioSource.minDistance;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.MinDistance)
                         .WriteFloat(value).Send();
                 }
-                source.minDistance = value;
+                AudioSource.minDistance = value;
             }
         }
 
         public bool Mute
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.mute;
+            get => AudioSource.mute;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.Mute)
                         .WriteBool(value).Send();
                 }
-                source.mute = value;
+                AudioSource.mute = value;
             }
         }
 
         public AudioMixerGroup OutputAudioMixerGroup
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.outputAudioMixerGroup;
+            get => AudioSource.outputAudioMixerGroup;
             set
             {
                 throw new NotImplementedException("Right now I have no idea how to synchronize it over network, but I will find out!");
@@ -412,195 +387,195 @@ namespace LambdaTheDev.NetworkAudioSync
         public float PanStereo
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.panStereo;
+            get => AudioSource.panStereo;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.PanStereo)
                         .WriteFloat(value).Send();
                 }
-                source.panStereo = value;
+                AudioSource.panStereo = value;
             }
         }
 
         public float Pitch
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.pitch;
+            get => AudioSource.pitch;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.Pitch)
                         .WriteFloat(value).Send();
                 }
-                source.pitch = value;
+                AudioSource.pitch = value;
             }
         }
 
         public int Priority
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.priority;
+            get => AudioSource.priority;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.Priority)
                         .WriteInt(value).Send();
                 }
-                source.priority = value;
+                AudioSource.priority = value;
             }
         }
 
         public float ReverbZoneMix
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.reverbZoneMix;
+            get => AudioSource.reverbZoneMix;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.ReverbZoneMix)
                         .WriteFloat(value).Send();
                 }
-                source.reverbZoneMix = value;
+                AudioSource.reverbZoneMix = value;
             }
         }
 
         public AudioRolloffMode RolloffMode
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.rolloffMode;
+            get => AudioSource.rolloffMode;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.RolloffMode)
                         .WriteByte((byte)value).Send();
                 }
-                source.rolloffMode = value;
+                AudioSource.rolloffMode = value;
             }
         }
 
         public float SpatialBlend
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.spatialBlend;
+            get => AudioSource.spatialBlend;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.SpatialBlend)
                         .WriteFloat(value).Send();
                 }
-                source.spatialBlend = value;
+                AudioSource.spatialBlend = value;
             }
         }
 
         public bool Spatialize
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.spatialize;
+            get => AudioSource.spatialize;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.Spatialize)
                         .WriteBool(value).Send();
                 }
-                source.spatialize = value;
+                AudioSource.spatialize = value;
             }
         }
 
         public bool SpatializePostEffects
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.spatializePostEffects;
+            get => AudioSource.spatializePostEffects;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.SpatializePostEffects)
                         .WriteBool(value).Send();
                 }
-                source.spatializePostEffects = value;
+                AudioSource.spatializePostEffects = value;
             }
         }
 
         public float Spread
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.spread;
+            get => AudioSource.spread;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.Spread)
                         .WriteFloat(value).Send();
                 }
-                source.spread = value;
+                AudioSource.spread = value;
             }
         }
 
         public float Time
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.time;
+            get => AudioSource.time;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.Time)
                         .WriteFloat(value).Send();
                 }
-                source.time = value;
+                AudioSource.time = value;
             }
         }
 
         public int TimeSamples
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.timeSamples;
+            get => AudioSource.timeSamples;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.TimeSamples)
                         .WriteInt(value).Send();
                 }
-                source.timeSamples = value;
+                AudioSource.timeSamples = value;
             }
         }
 
         public AudioVelocityUpdateMode VelocityUpdateMode
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.velocityUpdateMode;
+            get => AudioSource.velocityUpdateMode;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.VelocityUpdateMode)
                         .WriteByte((byte)value).Send();
                 }
-                source.velocityUpdateMode = value;
+                AudioSource.velocityUpdateMode = value;
             }
         }
 
         public float Volume
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => source.volume;
+            get => AudioSource.volume;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.Volume)
                         .WriteFloat(value).Send();
                 }
-                source.volume = value;
+                AudioSource.volume = value;
             }
         }
 
@@ -610,13 +585,13 @@ namespace LambdaTheDev.NetworkAudioSync
             get => GetState().IsPaused;
             set
             {
-                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+                using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
                 {
                     builder.WriteByte(AudioSourceActionId.Pause)
                         .WriteBool(value).Send();
                 }
-                if(value) source.Pause();
-                else source.UnPause();
+                if(value) AudioSource.Pause();
+                else AudioSource.UnPause();
                 
                 
             }
@@ -634,30 +609,30 @@ namespace LambdaTheDev.NetworkAudioSync
 
         public void Stop()
         {
-            using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+            using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
             {
                 builder.WriteByte(AudioSourceActionId.Stop).Send();
             }
-            source.Stop();
+            AudioSource.Stop();
         }
 
         public void Play()
         {
             EnsureClipIsSet();
-            using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+            using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
             {
                 builder.WriteByte(AudioSourceActionId.Play)
                     .WriteByte(AudioSourceActionId.PlayModes.Normal)
                     .Send();
             }
 
-            source.Play();
+            AudioSource.Play();
         }
 
         public void PlayDelayed(float delayInSeconds, bool compensateLatency = true)
         {
             EnsureClipIsSet();
-            using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+            using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
             {
                 builder.WriteByte(AudioSourceActionId.Play)
                     .WriteByte(AudioSourceActionId.PlayModes.Delayed)
@@ -666,7 +641,7 @@ namespace LambdaTheDev.NetworkAudioSync
                     .Send();
             }
 
-            source.PlayDelayed(delayInSeconds);
+            AudioSource.PlayDelayed(delayInSeconds);
         }
 
         public void PlayOneShot(int clipHash, float volumeScale = 1.0f)
@@ -684,7 +659,7 @@ namespace LambdaTheDev.NetworkAudioSync
         
         private void InternalPlayOneShot(AudioClip clip, int clipHash, float volumeScale)
         {
-            using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+            using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
             {
                 builder.WriteByte(AudioSourceActionId.Play)
                     .WriteByte(AudioSourceActionId.PlayModes.OneShot)
@@ -693,7 +668,7 @@ namespace LambdaTheDev.NetworkAudioSync
                     .Send();
             }
 
-            source.PlayOneShot(clip);
+            AudioSource.PlayOneShot(clip);
         }
 
         public void SetClip(int clipHash)
@@ -702,21 +677,21 @@ namespace LambdaTheDev.NetworkAudioSync
             AudioClip clip = clips.GetAudioClip(clipHash);
             EnsureClipIsNotNull(clip);
             
-            using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(_integration))
+            using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
             {
                 builder.WriteByte(AudioSourceActionId.SetClip)
                     .WriteInt(clipHash)
                     .Send();
             }
 
-            source.clip = clip;
+            AudioSource.clip = clip;
         }
 
         public void SetClip(string clipName) => SetClip(ComputeClipHashCode(clipName));
 
         private void EnsureClipIsSet()
         {
-            if (source.clip == null)
+            if (AudioSource.clip == null)
                 throw new MissingComponentException("You are trying to play AudioSource which has no clip chosen! Set default clip in the editor or call SetClip(...) method!");
         }
 
@@ -747,7 +722,7 @@ namespace LambdaTheDev.NetworkAudioSync
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private State GetState()
         {
-            if (NetworkAudioSyncManager.AudioSourceStates.TryGetValue(source, out State value))
+            if (NetworkAudioSyncManager.AudioSourceStates.TryGetValue(AudioSource, out State value))
                 return value;
 
             return null;

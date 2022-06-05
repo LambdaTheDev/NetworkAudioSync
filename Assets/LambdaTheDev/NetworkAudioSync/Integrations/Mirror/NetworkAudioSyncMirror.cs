@@ -23,7 +23,7 @@ namespace LambdaTheDev.NetworkAudioSync.Integrations.Mirror
         [ClientRpc]
         public void SendPacketIfServer(ArraySegment<byte> packet)
         {
-            _callback.Invoke(packet);
+            _callback?.Invoke(packet);
         }
     }
 }

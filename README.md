@@ -1,5 +1,5 @@
 # NetworkAudioSync
-Keep your audio in sync across clients in your multiplayer game!
+Keep your audio in sync across clients in your multiplayer Unity game!
 
 # How to get started?
 - Download NetworkAudioSync library with chosen networking integration (more about them later)
@@ -12,11 +12,12 @@ Keep your audio in sync across clients in your multiplayer game!
 - From now on, don't touch AudioSource component in your code - use NetworkAudioSource.
 
 # Main features
-- Asset covers most AudioSource features
-- NetworkAudioSource state changes are server-authoritative
-- Can be used with many networking solutions
-- Support Discord server, usually I respond in less than day
-- Audio synchronization is memory-friendly
+- Most AudioSource features are covered
+- Audio lag compensation included
+- Asset is server-authoritative
+- Can be used with all networking solutions
+- Support Discord server
+- Memory & GC friendly
 
 # Supported networking solutions
 To be honest, all networking solutions are supported! All you have to do is write custom integration component (remember to implement INetworkAudioSyncIntegration interface) & you are done! But here are listed networking solutions that are officially supported:
@@ -27,7 +28,11 @@ To be honest, all networking solutions are supported! All you have to do is writ
 If you have any problem with my asset, feel free to contact me on Discord: https://discord.gg/z9CakMWnT6
 
 # NetworkFootsteps
-This little script I made is to... efficiently synchronize footsteps sound. Here, sound accuracy does not matter, but performance. To configure this thing, you have to set footstep threshold, and footstep sounds. If you want to disable footsteps (for example when your character is in vehicle or is falling), then just disable NetworkFootsteps component and re-enable it when you will need it.
+This little script plays random sound when GameObject moves by some fixed distance. This is a perfect thing to use while implementing footsteps sounds - it uses much less network overhead. You can change at runtime footstep threshold, volume, and set if footsteps should be played or not (for example you don't wanna hear footsteps while driving a car or falling).
 
 # Planned features
 - Automatic late-joiners synchronization
+- Ambient sound synchronization (even for late-joiners
+
+# Projects that use NetworkAudioSync
+_If your project uses NetworkAudioSync & you want to promote it here, contact me on Discord!_

@@ -1,8 +1,11 @@
-﻿namespace LambdaTheDev.NetworkAudioSync.InternalNetworking
+﻿using System.IO;
+
+namespace LambdaTheDev.NetworkAudioSync.InternalNetworking
 {
     // Static class with AudioSource Action IDs used in packet sending & reading
     internal static class AudioSourceActionId
     {
+        // General NetworkAudioSync IDs
         public const byte BypassEffects = 1;
         public const byte BypassListenerEffects = 2;
         public const byte BypassReverbZones = 3;
@@ -34,12 +37,22 @@
         public const byte Stop = 28;
         public const byte SetClip = 29;
 
+        // NetworkFootsteps IDs
+        public const byte FootstepsEnabled = 75;
+        public const byte FootstepsVolume = 76;
+        public const byte FootstepThreshold = 77;
 
         public static class PlayModes
         {
             public const byte Normal = 0;
             public const byte Delayed = 1;
             public const byte OneShot = 2;
+        }
+
+        public static void InvalidPacketThrow()
+        {
+            // throw new InvalidDataException("Invalid packet arrived!");
+            // This may be a bad idea... maybe just disregard invalid packets?
         }
     }
 }
