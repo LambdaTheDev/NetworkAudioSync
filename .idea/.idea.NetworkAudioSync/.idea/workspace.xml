@@ -20,15 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="956d0f2c-b825-4a60-9817-668d683406e8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/BaseNetworkAudioSyncComponent.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/BaseNetworkAudioSyncComponent.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Footsteps/NetworkFootsteps.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Footsteps/NetworkFootsteps.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Integrations/FishNet/NetworkAudioSyncFishNet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Integrations/FishNet/NetworkAudioSyncFishNet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Integrations/Mirror/NetworkAudioSyncMirror.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Integrations/Mirror/NetworkAudioSyncMirror.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/InternalNetworking/AudioSourceActionId.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/InternalNetworking/AudioSourceActionId.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +121,7 @@
       <workItem from="1617368446564" duration="2546000" />
       <workItem from="1617373372186" duration="17564000" />
       <workItem from="1654424064275" duration="28176000" />
-      <workItem from="1654457328098" duration="4163000" />
+      <workItem from="1654457328098" duration="4405000" />
     </task>
     <servers />
   </component>
