@@ -1,3 +1,5 @@
+#if FISHNET
+
 using System;
 using FishNet.Object;
 
@@ -25,3 +27,5 @@ namespace LambdaTheDev.NetworkAudioSync.Integrations.FishNet
         }
     }
 }
+
+#endif

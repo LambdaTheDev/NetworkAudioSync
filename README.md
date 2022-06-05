@@ -1,31 +1,33 @@
 # NetworkAudioSync
-NetworkAudioSync is a small addon to Mirror Networking that lets you synchronize your audio effects across clients.
+Keep your audio in sync across clients in your multiplayer game!
 
-# How to use it?
-If you want basic audio synchronization, then add NetworkAudioSync component to your networked object. With it, one more component will appear - NetworkAudioClips. This is responsible for getting IDs of each AudioClip used in the NetworkAudioSync.
+# How to get started?
+- Download NetworkAudioSync library with chosen networking integration (more about them later)
+- Set up your AudioSources on networked objects
+- Create new NetworkAudioClips ScriptableObject and give it unique name (this is VERY important)
+- Add NetworkAudioSource component to your GameObjects that contain AudioSources
+- Assign your AudioSource and NetworkAudioClips instance to NetworkAudioSource
+- Assign networking solution integration component to the GameObject where NetworkAudioClips component is
+- If you have trouble with that, usually those components are named in following format: NetworkAudioSync(networking solution name). If you use Assembly definitions, then remember to reference NetworkAudioSync & your integration's assembly. If you still have problems, join our Discord for support (link below)
+- From now on, don't touch AudioSource component in your code - use NetworkAudioSource.
 
-After you are done with setup, reference NetworkAudioSync in your code, and execute SyncAudio(AudioClip) method (remember - audio clip that you place in SyncAudio method has to be present in the NetworkAudioClips!)
+# Main features
+- Asset covers most AudioSource features
+- NetworkAudioSource state changes are server-authoritative
+- Can be used with many networking solutions
+- Support Discord server, usually I respond in less than day
+- Audio synchronization is memory-friendly
 
-# What about other modules?
-I have thought about some specific situations when audio sync is needed. Here are listed all modules and explanation how to use them:
+# Supported networking solutions
+To be honest, all networking solutions are supported! All you have to do is write custom integration component (remember to implement INetworkAudioSyncIntegration interface) & you are done! But here are listed networking solutions that are officially supported:
+- Mirror: https://github.com/vis2k/Mirror
+- Fish-Networking: https://github.com/FirstGearGames/FishNet
 
-**NetworkFootsteps:**
-- I have made really simple way to sync player footsteps. In this case, it's not important to send the same audio clip on every step.
-- To use NetworkFootsteps, just add it to your object, place all your footstep AudioClips in the *footstepSounds* list, set sync threshold (if threshold is 1f, then player needs to walk by 1 unit to trigger footstep sync), and that's it!
-- You may also want to not hear footsteps in specific situations, for example if your player is crouching. Then, __on server__, set the SyncFootsteps property to false, and when player stops crouching - set it back to true.
+# Asset support
+If you have any problem with my asset, feel free to contact me on Discord: https://discord.gg/z9CakMWnT6
 
-**PreciseAudioSync**
-- This was made more for music. When you are using PreciseAudioSync, it is guaranteed that AudioClip will end in the same time for all players.
-- Note: If AudioClip you are syncing is shorter than latency between client-server, then clip will not be played.
-- Setup and usage is the same as in the regular NetworkAudioSync.
+# NetworkFootsteps
+This little script I made is to... efficiently synchronize footsteps sound. Here, sound accuracy does not matter, but performance. To configure this thing, you have to set footstep threshold, and footstep sounds. If you want to disable footsteps (for example when your character is in vehicle or is falling), then just disable NetworkFootsteps component and re-enable it when you will need it.
 
-**NetworkAnnouncer**
-- NetworkAnnouncer is something like the intercom.
-- NetworkAnnouncer setup is quite different than in previous modules. First 2 options are announcement prefix ans suffix. You can add there AudioClips that will play right before and right after specific announcement. Those aren't mandatory, so you don't have to assign them. Then, you have next 2 variables - *delayBetweenAnnouncements* and *delayAfterPrefix*. First one is amount of seconds that NetworkAnnouncer will wait before starting next announcement. Second float is amount of seconds that NA will wait before finishing playing *announcementPrefix* AudioClip.
-- To send an announcement, you only need to call Announce(AudioClip) method. Remember - AudioClip needs to be registered in the NetworkAudioClips!
-
-# Projects that use NetworkAudioSync:
-*If you use NetworkAudioSync, and want to promote your project, contact me on Discord - LambdaTheDev#6559*
-- SCP: Site-75 Game - https://discord.gg/g42K6TH - Semi-MMORPG in the SCP Foundation universe
-
-Enjoy & report all issues. If you want to contribute, DM me on Discord, or just make a pull request (remember to explain what you add to NetworkAudioSync)!
+# Planned features
+- Automatic late-joiners synchronization
