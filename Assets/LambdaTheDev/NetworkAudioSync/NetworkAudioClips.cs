@@ -1,62 +1,52 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using Mirror;
+﻿using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace LambdaTheDev.NetworkAudioSync
 {
-    public class NetworkAudioClips : MonoBehaviour
+    // Scriptable object that contains AudioClips that should be synced over network
+    [CreateAssetMenu(fileName = "NetworkAudioSync/NetworkAudioClips")]
+    public sealed class NetworkAudioClips : ScriptableObject
     {
-        //AudioClip is a key, so server has less operations to do
-        private readonly Dictionary<AudioClip, byte> _loadedClips = new Dictionary<AudioClip, byte>();
+        // Container for clip entries
+        [SerializeField] internal Entry[] registeredClips = Array.Empty<Entry>();
+
+        // True, if this NAC instance is initialized
+        private bool _initialized;
         
-        public List<AudioClip> registeredClips;
-
-#if UNITY_EDITOR || UNITY_SERVER
-
-        private void OnValidate()
-        {
-            if (registeredClips.Count - 1 > byte.MaxValue)
-                Debug.LogError("You can register up to 256 AudioClips in single NetworkAudioClips component!");
-        }
-
-#endif
+        // NAC instance ID
+        private short _id;
         
-        private void Awake()
+        
+        // Initializes this NAC instance
+        public void Initialize()
         {
-            _loadedClips.Clear();
-            
-            if (registeredClips.Count - 1 > byte.MaxValue)
-                throw new IndexOutOfRangeException("You can register up to 256 AudioClips in single NetworkAudioClips component!");
-            
-            if (registeredClips.Count == 0) 
-                Debug.LogWarning("NetworkAudioClips instance has 0 registered AudioClips! You sure about that?");
-            
-            byte nextId = 0;
-            foreach (AudioClip clip in registeredClips)
-            {
-                _loadedClips[clip] = nextId;
-                nextId++;
-            }
+            if (_initialized) return;
+            _id = NetworkAudioSyncManager.RegisterClips(this);
+            _initialized = true;
+        }
+        
+        // Returns AudioClip by clip ID
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public AudioClip GetAudioClip(int clipHash)
+        {
+            return NetworkAudioSyncManager.GetAudioClip(_id, clipHash);
+        }
+        
+        // Returns AudioClip by clip name
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public AudioClip GetAudioClip(string clipName)
+        {
+            int clipHash = NetworkAudioSyncUtils.GetPlatformStableHashCode(clipName);
+            return NetworkAudioSyncManager.GetAudioClip(_id, clipHash);
         }
 
-        public byte GetClipId(AudioClip clip)
+        // Audio clip entry representation
+        [Serializable]
+        public class Entry
         {
-            if (!_loadedClips.ContainsKey(clip))
-                throw new InvalidDataException("Tried to get ID of unregistered AudioClip!");
-
-            return _loadedClips[clip];
-        }
-
-        public AudioClip GetAudioClip(byte id)
-        {
-            foreach (var clip in _loadedClips)
-            {
-                if (clip.Value == id) return clip.Key;
-            }
-
-            throw new InvalidDataException("Could not get AudioClip for incoming ID: " + id + "!");
+            public string name;
+            public AudioClip clip;
         }
     }
 }
