@@ -5,7 +5,7 @@ using LambdaTheDev.NetworkAudioSync.InternalNetworking.Unions;
 namespace LambdaTheDev.NetworkAudioSync.InternalNetworking
 {
     // Helper struct used to read packet content
-    public sealed class AudioPacketReader : IDisposable
+    internal sealed class AudioPacketReader : IDisposable
     {
         private ArraySegment<byte> _buffer;
         private int _offset;

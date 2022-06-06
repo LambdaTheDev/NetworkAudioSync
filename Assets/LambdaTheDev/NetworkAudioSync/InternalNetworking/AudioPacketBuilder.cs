@@ -6,7 +6,7 @@ using LambdaTheDev.NetworkAudioSync.InternalNetworking.Unions;
 namespace LambdaTheDev.NetworkAudioSync.InternalNetworking
 {
     // Helper struct used to fill out packet contents
-    public sealed class AudioPacketBuilder : IDisposable
+    internal sealed class AudioPacketBuilder : IDisposable
     {
         private INetworkAudioSyncIntegration _integration;
         private byte[] _buffer;

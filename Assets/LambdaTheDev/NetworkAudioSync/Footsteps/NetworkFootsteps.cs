@@ -12,12 +12,12 @@ namespace LambdaTheDev.NetworkAudioSync.Footsteps
         [SerializeField] private float footstepThreshold = 1.0f;
         [SerializeField] [Range(0, 1f)] private float footstepsVolume = 1.0f;
         [SerializeField] private AudioClip[] footstepSounds = Array.Empty<AudioClip>();
+        [SerializeField] private bool footstepsEnabled = true;
 
         private Vector3 _lastPosition;
         private float _footstepThresholdSquared;
-        private bool _enabled;
 
-        
+
         protected override void VirtualAwake()
         {
             if(footstepSounds.Length == 0)
@@ -29,7 +29,7 @@ namespace LambdaTheDev.NetworkAudioSync.Footsteps
 
         private void Update()
         {
-            if (!_enabled) return;
+            if (!footstepsEnabled) return;
 
             Vector3 position = transform.position;
             Vector3 difference = _lastPosition - position;
@@ -74,7 +74,7 @@ namespace LambdaTheDev.NetworkAudioSync.Footsteps
         
         public bool Enabled
         {
-            get => _enabled;
+            get => footstepsEnabled;
             set
             {
                 using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
@@ -83,7 +83,7 @@ namespace LambdaTheDev.NetworkAudioSync.Footsteps
                         .WriteBool(value).Send();
                 }
 
-                _enabled = value;
+                footstepsEnabled = value;
             }
         }
 
@@ -103,7 +103,7 @@ namespace LambdaTheDev.NetworkAudioSync.Footsteps
                     break;
                 
                 case AudioSourceActionId.FootstepsEnabled:
-                    _enabled = reader.ReadBool();
+                    footstepsEnabled = reader.ReadBool();
                     break;
                 
                 case AudioSourceActionId.FootstepsVolume:
