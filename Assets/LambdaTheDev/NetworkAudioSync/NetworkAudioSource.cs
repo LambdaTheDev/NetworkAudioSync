@@ -109,10 +109,12 @@ namespace LambdaTheDev.NetworkAudioSync
                 case AudioSourceActionId.DopplerLevel:
                     AudioSource.dopplerLevel = reader.ReadFloat();
                     break;
-                    
+
+#if UNITY_EDITOR || UNITY_PS4 || UNITY_PS5
                 case AudioSourceActionId.GamepadSpeakerOutputType:
                     AudioSource.gamepadSpeakerOutputType = (GamepadSpeakerOutputType)reader.ReadByte();
                     break;
+#endif
                     
                 case AudioSourceActionId.IgnoreListenerPause:
                     AudioSource.ignoreListenerPause = reader.ReadBool();
@@ -269,6 +271,7 @@ namespace LambdaTheDev.NetworkAudioSync
             }
         }
 
+#if UNITY_EDITOR || UNITY_PS4 || UNITY_PS5
         public GamepadSpeakerOutputType GamepadSpeakerOutputType
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -283,6 +286,7 @@ namespace LambdaTheDev.NetworkAudioSync
                 AudioSource.gamepadSpeakerOutputType = value;
             }
         }
+#endif
 
         public bool IgnoreListenerPause
         { 
