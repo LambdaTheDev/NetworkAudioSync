@@ -1,5 +1,4 @@
-﻿using System;
-using LambdaTheDev.NetworkAudioSync.Integrations;
+﻿using LambdaTheDev.NetworkAudioSync.Integrations;
 using UnityEngine;
 
 namespace LambdaTheDev.NetworkAudioSync

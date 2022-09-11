@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace LambdaTheDev.NetworkAudioSync.InternalNetworking
+﻿namespace LambdaTheDev.NetworkAudioSync.InternalNetworking
 {
     // Static class with AudioSource Action IDs used in packet sending & reading
     internal static class AudioSourceActionId
