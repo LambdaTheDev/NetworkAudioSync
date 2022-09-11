@@ -1,0 +1,20 @@
+{
+    "name": "LambdaTheDev.NetworkAudioSync.Demo.FishNet",
+    "rootNamespace": "",
+    "references": [
+        "GUID:7c88a4a7926ee5145ad2dfa06f454c67",
+        "GUID:c8bada97d195b354ebeb254bfca42242",
+        "GUID:b5f1e6b98094a6c4d92fe058393b15d3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "FISHNET"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

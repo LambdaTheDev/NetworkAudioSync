@@ -21,8 +21,9 @@ namespace LambdaTheDev.NetworkAudioSync
             short clipsHashCode = NetworkAudioSyncUtils.GetPlatformStableHashCodeShort(clips.name);
             if (RegisteredClips.ContainsKey(clipsHashCode))
                 throw new DuplicateNameException("NetworkAudioClips ScriptableObject's name caused hash code collision (ScriptableObject name: " + clips.name + "). Please re-name it!");
+            
             // Put AudioClips from SO to internal Dictionary & null string, so it can be GCd
-            Dictionary<int, AudioClip> newClips = new Dictionary<int, AudioClip>();
+            Dictionary<int, AudioClip> newClips = new Dictionary<int, AudioClip>(clips.registeredClips.Length);
             for (int i = 0; i < clips.registeredClips.Length; i++)
             {
                 // Ensure that AudioClips name does not cause collisions

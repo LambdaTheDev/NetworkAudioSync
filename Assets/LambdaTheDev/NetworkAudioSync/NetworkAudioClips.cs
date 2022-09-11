@@ -12,7 +12,7 @@ namespace LambdaTheDev.NetworkAudioSync
         [SerializeField] internal Entry[] registeredClips = Array.Empty<Entry>();
 
         // True, if this NAC instance is initialized
-        private bool _initialized;
+        [NonSerialized] private bool _clipsInitialized = false;
         
         // NAC instance ID
         private short _id;
@@ -21,9 +21,9 @@ namespace LambdaTheDev.NetworkAudioSync
         // Initializes this NAC instance
         public void Initialize()
         {
-            if (_initialized) return;
+            if (_clipsInitialized) return;
             _id = NetworkAudioSyncManager.RegisterClips(this);
-            _initialized = true;
+            _clipsInitialized = true;
         }
         
         // Returns AudioClip by clip ID
