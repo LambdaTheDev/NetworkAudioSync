@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 925fc096350b81f4f82f4fe4ac0c4dda, type: 3}
   m_Name: NoLogging
   m_EditorClassIdentifier: 
-  _loggingEnabled: 0
-  _developmentLogging: 0
-  _guiLogging: 0
-  _headlessLogging: 0
+  _loggingEnabled: 1
+  _developmentLogging: 2
+  _guiLogging: 2
+  _headlessLogging: 2

@@ -8,7 +8,7 @@ namespace LambdaTheDev.NetworkAudioSync.Demo.Scripts
     {
         private void Start()
         {
-            InstanceFinder.ServerManager.StartConnection();
+            InstanceFinder.ServerManager.StartConnection(7396);
         }
 
         private void Update()

@@ -20,17 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="956d0f2c-b825-4a60-9817-668d683406e8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Demo/Scripts/PlayingObjInstance.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Demo/Scripts/PlayingObjInstance.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Demo/Scripts/TestConductor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Demo/Scripts/TestConductor.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.NetworkAudioSync/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioClips.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Demo/Prefabs/NoLogging.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Demo/Prefabs/NoLogging.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Demo/Scripts/Empty.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Demo/Scripts/Empty.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Demo/Scripts/TestConductor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/Demo/Scripts/TestConductor.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSyncManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LambdaTheDev/NetworkAudioSync/NetworkAudioSyncManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/RiderScriptEditorPersistedState.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/RiderScriptEditorPersistedState.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -132,6 +126,7 @@
       <workItem from="1654457328098" duration="4405000" />
       <workItem from="1662896182473" duration="422000" />
       <workItem from="1662917270428" duration="2314000" />
+      <workItem from="1662994288816" duration="815000" />
     </task>
     <servers />
   </component>

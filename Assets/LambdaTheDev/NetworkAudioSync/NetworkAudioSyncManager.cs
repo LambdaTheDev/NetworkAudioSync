@@ -32,9 +32,8 @@ namespace LambdaTheDev.NetworkAudioSync
                 if (newClips.ContainsKey(entryHashCode))
                     throw new DuplicateNameException("AudioClip entry name in NetworkAudioClips caused hash code collision! (ScriptableObject name: " + clips.name + ", Entry name: " + entry.name + "). Please re-name it!");
                 
-                // If no collision, add AudioClip to dictionary & set name string to null
+                // If no collision, add AudioClip to dictionary
                 newClips.Add(entryHashCode, entry.clip);
-                entry.name = null;
             }
             
             // Insert Dictionary with clips to static registry & return NAC instance ID
