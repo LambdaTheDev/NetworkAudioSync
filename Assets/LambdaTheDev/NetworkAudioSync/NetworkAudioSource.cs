@@ -34,6 +34,8 @@ namespace LambdaTheDev.NetworkAudioSync
             if (Integration.IsServer) return;
 
             using AudioPacketReader reader = NetworkAudioSyncPools.PacketReaderPool.Rent();
+            reader.SetBuffer(packet);
+            
             byte packetId = reader.ReadByte();
 
             switch (packetId)
