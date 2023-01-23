@@ -51,11 +51,18 @@ namespace LambdaTheDev.NetworkAudioSync
                             break;
                             
                         case AudioSourceActionId.PlayModes.Delayed:
+                            float volume = reader.ReadFloat();
+                            if (volume > 0)
+                            {
+                                volume = Mathf.Clamp(volume, 0f, 1f);
+                                AudioSource.volume = volume;
+                            }
+                            
                             float delay = reader.ReadFloat();
                             bool compensate = reader.ReadBool();
 
                             if (compensate)
-                                delay = Mathf.Clamp(delay - Integration.ClientLatency, 0, float.MaxValue);
+                                delay = Mathf.Max(delay - Integration.ClientLatency, 0);
 
                             AudioSource.PlayDelayed(delay);
                             break;
@@ -66,8 +73,9 @@ namespace LambdaTheDev.NetworkAudioSync
                             EnsureNetworkAudioClipsIsSet();
                             AudioClip oneShotClip = clips.GetAudioClip(oneShotClipHash);
                             EnsureClipIsNotNull(oneShotClip);
-                                
-                            AudioSource.PlayOneShot(oneShotClip, volumeScale);
+
+                            AudioSource.volume = volumeScale;
+                            AudioSource.PlayOneShot(oneShotClip);
                             break;
                             
                         default:
@@ -633,18 +641,25 @@ namespace LambdaTheDev.NetworkAudioSync
             AudioSource.Play();
         }
 
-        public void PlayDelayed(float delayInSeconds, bool compensateLatency = true)
+        public void PlayDelayed(float delayInSeconds, float volume = -1f, bool compensateLatency = true)
         {
             EnsureClipIsSet();
             using (AudioPacketBuilder builder = NetworkAudioSyncPools.RentBuilder(Integration))
             {
                 builder.WriteByte(AudioSourceActionId.Play)
                     .WriteByte(AudioSourceActionId.PlayModes.Delayed)
+                    .WriteFloat(volume)
                     .WriteFloat(delayInSeconds)
                     .WriteBool(compensateLatency)
                     .Send();
             }
 
+            if (volume > 0)
+            {
+                volume = Mathf.Clamp(volume, 0, 1);
+                AudioSource.volume = volume;
+            }
+            
             AudioSource.PlayDelayed(delayInSeconds);
         }
 
@@ -672,6 +687,7 @@ namespace LambdaTheDev.NetworkAudioSync
                     .Send();
             }
 
+            AudioSource.volume = volumeScale;
             AudioSource.PlayOneShot(clip);
         }
 
