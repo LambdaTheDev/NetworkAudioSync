@@ -14,10 +14,14 @@ namespace LambdaTheDev.NetworkAudioSync.Integrations
         // Returns latency for local client
         float ClientLatency { get; }
         
+        
         // Binds packet callback to this integration
         void BindPacketCallback(Action<ArraySegment<byte>> callback);
+
+        // Resets the packet callback to this integration
+        void ResetPacketCallback();
         
-        // Send packet only if ready & server (if client calls this method, exception can be thrown)
-        void SendPacketIfServer(ArraySegment<byte> packet);
+        // Server method used to execute the packet, and then broadcasts it to other clients
+        void ServerExecuteAndBroadcastPacket(ArraySegment<byte> packet);
     }
 }

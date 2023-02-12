@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using LambdaTheDev.NetworkAudioSync.Integrations;
 using LambdaTheDev.NetworkAudioSync.InternalNetworking.Unions;
+using UnityEngine;
 
 namespace LambdaTheDev.NetworkAudioSync.InternalNetworking
 {
@@ -11,6 +12,7 @@ namespace LambdaTheDev.NetworkAudioSync.InternalNetworking
         private INetworkAudioSyncIntegration _integration;
         private byte[] _buffer;
         private int _count;
+        private bool _isServer;
 
 
         public void SetBuffer(byte[] buffer)
@@ -22,6 +24,7 @@ namespace LambdaTheDev.NetworkAudioSync.InternalNetworking
         public void SetIntegration(INetworkAudioSyncIntegration integration)
         {
             _integration = integration;
+            _isServer = integration.IsServer;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -63,12 +66,22 @@ namespace LambdaTheDev.NetworkAudioSync.InternalNetworking
             WriteInt(union.intValue);
             return this;
         }
+
+        public AudioPacketBuilder WriteVector3(Vector3 value)
+        {
+            WriteFloat(value.x);
+            WriteFloat(value.y);
+            WriteFloat(value.z);
+            return this;
+        }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Send()
         {
+            if(!_isServer) ThrowSendingAsNotServer();
+            
             var data = new ArraySegment<byte>(_buffer, 0, _count);
-            _integration.SendPacketIfServer(data);
+            _integration.ServerExecuteAndBroadcastPacket(data);
         }
 
         public void Dispose()
@@ -78,6 +91,11 @@ namespace LambdaTheDev.NetworkAudioSync.InternalNetworking
             _integration = null;
             _buffer = null;
             _count = 0;
+        }
+
+        private static void ThrowSendingAsNotServer()
+        {
+            throw new Exception("Cannot send synchronized audio over network as non-server!");
         }
     }
 }

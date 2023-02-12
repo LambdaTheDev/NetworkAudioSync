@@ -1,13 +1,11 @@
-using System;
 using System.Runtime.CompilerServices;
-using LambdaTheDev.NetworkAudioSync.InternalNetworking;
 using UnityEngine;
-using UnityEngine.Audio;
 
 namespace LambdaTheDev.NetworkAudioSync
 {
     // Allows AudioSource settings synchronization over network
-    public class NetworkAudioSource : BaseNetworkAudioSyncComponent
+    // Base implementation with definitions & essentials
+    public partial class NetworkAudioSource : BaseNetworkAudioSyncComponent
     {
         // Audio clips used by this NAS instance
         [SerializeField] private NetworkAudioClips clips;
@@ -25,6 +23,7 @@ namespace LambdaTheDev.NetworkAudioSync
         }
 
         protected override void VirtualOnDestroy() { }
+<<<<<<< Updated upstream
 
         #region Internal networking processor
 
@@ -729,6 +728,9 @@ namespace LambdaTheDev.NetworkAudioSync
         
         #endregion
 
+=======
+        
+>>>>>>> Stashed changes
 
         #region Other functionalities
 

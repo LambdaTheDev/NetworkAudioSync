@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using LambdaTheDev.NetworkAudioSync.InternalNetworking.Unions;
+using UnityEngine;
 
 namespace LambdaTheDev.NetworkAudioSync.InternalNetworking
 {
@@ -59,6 +60,15 @@ namespace LambdaTheDev.NetworkAudioSync.InternalNetworking
             int intValue = ReadInt();
             IntFloatUnion union = new IntFloatUnion { intValue = intValue };
             return union.floatValue;
+        }
+
+        public Vector3 ReadVector3()
+        {
+            float x = ReadFloat();
+            float y = ReadFloat();
+            float z = ReadFloat();
+
+            return new Vector3(x, y, z);
         }
 
         public void Dispose()

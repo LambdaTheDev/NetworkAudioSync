@@ -1,4 +1,6 @@
-﻿namespace LambdaTheDev.NetworkAudioSync
+﻿using System;
+
+namespace LambdaTheDev.NetworkAudioSync
 {
     // Utilities for NetworkAudioSync
     public static class NetworkAudioSyncUtils
@@ -33,5 +35,10 @@
             int intHashCode = GetPlatformStableHashCode(str);
             return (short)(intHashCode & 0xFFFF);
         }
+        
+        // Just a default callback method to avoid null check in packet processor
+        private static void EmptyCallbackMethod(ArraySegment<byte> _) { }
+        
+        public static readonly Action<ArraySegment<byte>> EmptyCallback = EmptyCallbackMethod;
     }
 }

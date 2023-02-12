@@ -12,18 +12,17 @@ namespace LambdaTheDev.NetworkAudioSync.Integrations.FishNet
         bool INetworkAudioSyncIntegration.IsServer => IsServer;
         float INetworkAudioSyncIntegration.ClientLatency => TimeManager.RoundTripTime / 1000f;
 
-        private Action<ArraySegment<byte>> _callback;
+        private Action<ArraySegment<byte>> _callback = NetworkAudioSyncUtils.EmptyCallback;
         
         
-        public void BindPacketCallback(Action<ArraySegment<byte>> callback)
-        {
-            _callback = callback;
-        }
+        public void BindPacketCallback(Action<ArraySegment<byte>> callback) { _callback = callback; }
+        public void ResetPacketCallback() => BindPacketCallback(NetworkAudioSyncUtils.EmptyCallback);
+        
 
         [ObserversRpc]
-        public void SendPacketIfServer(ArraySegment<byte> packet)
+        public void ServerExecuteAndBroadcastPacket(ArraySegment<byte> packet)
         {
-            _callback?.Invoke(packet);
+            _callback.Invoke(packet);
         }
     }
 }

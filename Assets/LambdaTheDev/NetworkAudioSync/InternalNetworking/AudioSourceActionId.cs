@@ -39,12 +39,13 @@
         public const byte FootstepsEnabled = 75;
         public const byte FootstepsVolume = 76;
         public const byte FootstepThreshold = 77;
-
+        
         public static class PlayModes
         {
             public const byte Normal = 0;
             public const byte Delayed = 1;
             public const byte OneShot = 2;
+            public const byte AtPoint = 3;
         }
 
         public static void InvalidPacketThrow()
