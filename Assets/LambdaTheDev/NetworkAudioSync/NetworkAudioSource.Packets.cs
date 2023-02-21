@@ -36,7 +36,11 @@ namespace LambdaTheDev.NetworkAudioSync
                     switch (playMode)
                     {
                         case AudioSourceActionId.PlayModes.Normal:
-                            AudioSource.Play();
+                            bool delayPresent = reader.ReadBool();
+                            int playDelay = 0;
+                            if (delayPresent) playDelay = reader.ReadInt();
+                            
+                            AudioSource.Play((ulong)playDelay);
                             break;
                             
                         case AudioSourceActionId.PlayModes.Delayed:
