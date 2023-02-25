@@ -19,7 +19,7 @@ namespace LambdaTheDev.NetworkAudioSync.Integrations.FishNet
         public void ResetPacketCallback() => BindPacketCallback(NetworkAudioSyncUtils.EmptyCallback);
         
 
-        [ObserversRpc]
+        [ObserversRpc(RunLocally = true)]
         public void ServerExecuteAndBroadcastPacket(ArraySegment<byte> packet)
         {
             _callback.Invoke(packet);
