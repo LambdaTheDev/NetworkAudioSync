@@ -604,7 +604,7 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Standalone: FISHNET;FISHNET_V4
+    Standalone: FISHNET;FISHNET_V4;FISHNET_DISABLE_V3TOV4_HELPERS
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
