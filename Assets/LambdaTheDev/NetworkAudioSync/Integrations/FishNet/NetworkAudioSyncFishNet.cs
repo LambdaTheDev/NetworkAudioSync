@@ -9,7 +9,7 @@ namespace LambdaTheDev.NetworkAudioSync.Integrations.FishNet
     public sealed class NetworkAudioSyncFishNet : NetworkBehaviour, INetworkAudioSyncIntegration
     {
         bool INetworkAudioSyncIntegration.IsReady => !IsOffline;
-        bool INetworkAudioSyncIntegration.IsServer => IsServer;
+        bool INetworkAudioSyncIntegration.IsServer => IsServerInitialized;
         float INetworkAudioSyncIntegration.ClientLatency => TimeManager.RoundTripTime / 1000f;
 
         private Action<ArraySegment<byte>> _callback = NetworkAudioSyncUtils.EmptyCallback;
